@@ -28,7 +28,16 @@ pool.query('SELECT NOW()', err => {
 });
 
 //CRUDs de los endpoints
-
+app.get('/users', async(req,res) => {
+    try{
+        const result = await pool.query('SELECT * FROM users');
+        res.status(200).json(result.rows);
+    }catch(err){
+        console.error(err)
+        res.status(500).json({error: 'Error al obtener los usuarios'})
+    }
+})
+app.get('/task')
 //CREATE crear usuarios
 app.post('/users', async(req,res) => {
     const {name, email, password} = req.body;
@@ -40,6 +49,13 @@ app.post('/users', async(req,res) => {
     }catch(err){
         console.error(err)
         res.status(500).json({error: 'Error al crear el usuario'})
+    }
+});
+
+app.get('/users/:id', async(req,res) => {
+    const {id} = req.params;
+    try{
+        const result = await pool.query('SELECT u.username, u.email, u.password_hash, ')
     }
 })
 
